@@ -1,0 +1,21 @@
+{
+    "name": "adraawen/touche_pas_au_klaxon",
+    "type": "project",
+    "description": "Application de covoiturage entre employés pour l'entreprise Touche pas au Klaxon",
+    "authors": [
+        {
+            "name": "Nolwenn Bauvais"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Config\\": "config/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.0"
+    }
+}
