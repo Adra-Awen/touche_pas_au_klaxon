@@ -16,11 +16,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
 */
 use Buki\Router\Router;
 
-/** Initialisation du routeur avec sa configuration par défaut
- * Initialization of the router with its default configuration
+/** Initialisation du routeur avec configuration personnalsée
+ * Initialization of the router with personalized configuration
  * @var Router $router
 */
-$router = new Router();
+$router = new Router([
+    'paths' => [
+        'controllers' => __DIR__ . '/../app/Controllers',
+    ],
+    'namespaces' => [
+        'controllers' => 'Controllers',
+    ],
+]);
 
 // DEFINITION DES ROUTES DE L'APPLICATION
 
@@ -28,10 +35,7 @@ $router = new Router();
  * Home page route
  * URL : http://localhost/touche_pas_au_klaxon/public/
  */
-$router->get('/', function () {
-    echo "<h1>Bienvenue sur Touche pas au klaxon !</h1>
-          <p>Cette application est en cours de développement.</p>";
-});
+$router->get('/', 'HomeController@index');
 
 /**
  * Route pour tester la connexion à la base de données
