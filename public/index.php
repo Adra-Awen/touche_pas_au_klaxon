@@ -1,5 +1,10 @@
 <?php
 
+/** Initialisation de la session
+ * Session initialization
+ */
+session_start();
+
 /** This file is the entry point of the application. 
  * It initializes the routing system and handles incoming requests. 
  * Ce fichier est le point d'entrée de l'application.
@@ -143,9 +148,52 @@ $router->post('/admin/users/update', 'AdminController@usersUpdate');
  */
 $router->get('/admin/users/delete/:id', 'AdminController@usersDelete');
 
+// AUTHENTIFICATION
+/**
+ * Affichage du formulaire de connexion
+ * Displaying the login form
+ */
+$router->get('/login', 'AuthController@showLogin');
+/** 
+ * Traitement de la connexion
+ * Processing the login
+ */
+$router->post('/login', 'AuthController@login');
+/** 
+ * Déconnexion
+ * Logout
+ */
+$router->get('/logout', 'AuthController@logout');
+
+// TRAJETS
+/**
+ * Affichage du formulaire d'ajout d'un trajet
+ * Displaying the form to add a new trip
+ */
+$router->get('/trajets/add', 'TrajetController@add');
+/**
+ * Traitement de l'ajout d'un trajet
+ * Processing the addition of a new trip
+ */
+$router->post('/trajets/create', 'TrajetController@create');
+/**
+ * Modification d'un trajet
+ * Modify trip
+ */
+$router->get('/trajets/edit/:id', 'TrajetController@edit');
+/**
+ * Traitement de la mofification d'un trajet
+ * Retrieving modification of the trip
+ */
+$router->post('/trajets/update/:id', 'TrajetController@update');
+/**
+ * Suppression d'un trajet
+ * Deleting a trip
+ */
+$router->get('/trajets/delete/:id', 'TrajetController@delete');
+
 // BASE DE DONNEES
 // DATABASE
-
 /**
  * Route pour tester la connexion à la base de données
  * Database connection test route
