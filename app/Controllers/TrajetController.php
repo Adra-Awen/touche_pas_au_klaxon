@@ -25,7 +25,7 @@ class TrajetController
     public function index()
     {
         try {
-            echo "<h1>Liste des trajets</h1>";
+            echo "<h2>Liste des trajets</h2>";
 
             $trajets = Trajet::getAllUpcoming();
 

@@ -39,19 +39,19 @@ $router = new Router([
 
 /** Route pour la page d'accueil
  * Home page route
- * URL : http://localhost/touche_pas_au_klaxon/
+ * URL : http://localhost/8000
  */
 $router->get('/', 'HomeController@index');
 
 /** Route pour les trajets
  * Trips page route
- * URL : http://localhost/touche_pas_au_klaxon/trajets
+ * URL : http://localhost/8000/trajets
  */
 $router->get('/trajets', 'TrajetController@index');
 
 /** Route pour la page des utilisateurs
  * Users page route
- * URL : http://localhost/touche_pas_au_klaxon/users
+ * URL : http://localhost/8000/users
  */
 $router->get('/users', 'UserController@index');
 
@@ -61,58 +61,65 @@ $router->get('/users', 'UserController@index');
 /** 
  * Page principale du panneau d'administration
  * Main page of the admin panel
- * URL : http://localhost/touche_pas_au_klaxon/admin
+ * URL : http://localhost/8000/admin
  */
 $router->get('/admin', 'AdminController@index');
 
 /**
  * Liste des villes pour l'admin
  * List of cities for the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/villes
+ * URL : http://localhost/8000/admin/villes
  */
 $router->get('/admin/villes', 'AdminController@villesIndex');
 
 /** 
- * Action d'ajout d'une ville pour l'admin
+ * Action d'ajout d'une ville pour l'admin et de la traiter
  * Adding a city by the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/villes/ajouter
+ * URL : http://localhost/8000/admin/villes/add
  */
-$router->post('/admin/villes/ajouter', 'AdminController@villesAdd');
+$router->get('/admin/villes/add', 'AdminController@villesAdd');
+$router->post('/admin/villes/create', 'AdminController@villesCreate');
 
 /** 
- * Action de modification d'une ville pour l'admin
+ * Editer une ville pour l'admin
  * Editing a city by the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/villes/modifier
  */
-$router->put('/admin/villes/modifier', 'AdminController@villesUpdate');
+$router->get('/admin/villes/edit/:id', 'AdminController@villesEdit');
+
+/** 
+ * Traitement de l'édition d'une ville pour l'admin
+ * Processing the edit of  a city by the admin
+ * URL : http://localhost/8000/admin/villes/update
+ */
+$router->post('/admin/villes/update/:id', 'AdminController@villesUpdate');
 
 /** 
  * Action de suppression d'une ville pour l'admin
  * Deleting a city by the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/villes/supprimer
+ * URL : http://localhost/8000/admin/villes/delete
  */
-$router->delete('/admin/villes/supprimer', 'AdminController@villesDelete');
+$router->get('/admin/villes/delete/:id', 'AdminController@villesDelete');
 
 /**
  *  Consultation de tous les employés par l'admin
  * Listing all employees for the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/users
+ * URL : http://localhost/8000/admin/users
  */
 $router->get('/admin/users', 'AdminController@usersIndex');
 
 /**
  * Mise à jour du profil d'un employé par l'admin
  * Updating an employee's profile by the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/users/update
+ * URL : http://localhost/8000/admin/users/update
  */
-$router->put('/admin/users/update', 'AdminController@usersUpdate');
+$router->post('/admin/users/update/:id', 'AdminController@usersUpdate');
 
 /**
  * Suppression d'un employé par l'admin
  * Deleting an employee by the admin
- * URL : http://localhost/touche_pas_au_klaxon/admin/users/delete
+ * URL : http://localhost/8000/admin/users/delete
  */
-$router->delete('/admin/users/delete', 'AdminController@usersDelete');
+$router->get('/admin/users/delete/:id', 'AdminController@usersDelete');
 
 // BASE DE DONNEES
 // DATABASE
@@ -120,7 +127,7 @@ $router->delete('/admin/users/delete', 'AdminController@usersDelete');
 /**
  * Route pour tester la connexion à la base de données
  * Database connection test route
- * URL : http://localhost/touche_pas_au_klaxon/test-db
+ * URL : http://localhost/8000/test-db
  */
 $router->get('/test-db', function () {
     try {
