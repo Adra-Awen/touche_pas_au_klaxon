@@ -40,7 +40,8 @@ class Trajet
                     INNER JOIN agences a_dep ON t.id_agence_depart= a_dep.id
                     INNER JOIN agences a_arr ON t.id_agence_arrivee = a_arr.id
                     INNER JOIN users u ON t.id_conducteur = u.id
-                    WHERE t.gdh_depart >= NOW() 
+                    WHERE t.gdh_depart >= NOW()
+                    AND t.places_disponibles > 0
                     ORDER BY t.gdh_depart ASC";
             $stmt = $db->query($queryStr);
             $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -100,7 +101,7 @@ class Trajet
             $stmt = $db->prepare($queryStr);
             $stmt->execute(['id_conducteur' => $id_conducteur]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOExeption $e) {
+        } catch (PDOException $e) {
             throw $e;
         }
     }
