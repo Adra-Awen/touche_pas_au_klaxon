@@ -29,6 +29,23 @@ class Agence
             throw new PDOException("Erreur lors de la récupération des agences : " . $e->getMessage());
         }
     }
+
+    /**
+    * Récupère une agence par son identifiant
+    * Retrieves an agency by its ID
+    */
+    public static function getById(int $id): ?array
+    {
+        try {
+            $db = Database::getConnection();
+            $stmt = $db->prepare("SELECT id, ville FROM agences WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+            $agence = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $agence ?: null;
+        } catch (PDOException $e) {
+            throw new PDOException("Erreur lors de la récupération de l'agence : " . $e->getMessage());
+        }
+    }
     
     /**
      * Insère une nouvelle agence/ville dans la base de données

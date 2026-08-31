@@ -52,4 +52,52 @@ class User
             throw new PDOException("Erreur lors de la récupération des utilisateurs : " . $e->getMessage());
         }
     }
+
+    /** Crée un nouvel utilisateur dans la base de données
+     * Creates a new user in the database
+     * @param array $data Les données de l'utilisateur
+     * @return bool True if the user was created successfully, false otherwise
+     * @throws PDOException Si une erreur survient lors de la requête
+     */
+    public static function create($nom, $prenom, $telephone, $email, $mdp, $role = 'user')
+    {
+        $db = \Config\Database::getConnection();
+        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
+        $stmt = $db->prepare("INSERT INTO users (nom, prenom, telephone, email, mdp, role) VALUES (?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$nom, $prenom, $telephone, $email, $hashedMdp, $role]);
+    }
+
+    /** Met à jour les informations d'un utilisateur dans la base de données
+     * Updates a user's information in the database
+     * @param int $id L'ID de l'utilisateur
+     * @param array $data Les nouvelles données de l'utilisateur
+     * @return bool True if the user was updated successfully, false otherwise
+     * @throws PDOException Si une erreur survient lors de la requête
+     */
+    public static function update($id, $data)
+    {
+        $db = \Config\Database::getConnection();
+        $stmt = $db->prepare("UPDATE users SET nom = ?, prenom = ?, telephone = ?, email = ?, role = ? WHERE id = ?");
+        return $stmt->execute([
+            $data['nom'],
+            $data['prenom'],
+            $data['telephone'],
+            $data['email'],
+            $data['role'],
+            $id
+        ]);
+    }
+
+    /** Supprime un utilisateur de la base de données
+     * Deletes a user from the database
+     * @param int $id L'ID de l'utilisateur
+     * @return bool True if the user was deleted successfully, false otherwise
+     * @throws PDOException Si une erreur survient lors de la requête
+     */
+    public static function delete($id)
+    {
+        $db = \Config\Database::getConnection();
+        $stmt = $db->prepare("DELETE FROM users WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 }

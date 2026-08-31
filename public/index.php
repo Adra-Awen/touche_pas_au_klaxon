@@ -1,5 +1,10 @@
 <?php
 
+/** Initialisation de la session
+ * Session initialization
+ */
+session_start();
+
 /** This file is the entry point of the application. 
  * It initializes the routing system and handles incoming requests. 
  * Ce fichier est le point d'entrée de l'application.
@@ -58,6 +63,8 @@ $router->get('/users', 'UserController@index');
 
 // ROUTES ADMIN (CRUD)
 // ADMIN ROUTES (CRUD)
+
+/** VILLES */
 /** 
  * Page principale du panneau d'administration
  * Main page of the admin panel
@@ -100,6 +107,8 @@ $router->post('/admin/villes/update/:id', 'AdminController@villesUpdate');
  */
 $router->get('/admin/villes/delete/:id', 'AdminController@villesDelete');
 
+
+/** USERS */
 /**
  *  Consultation de tous les employés par l'admin
  * Listing all employees for the admin
@@ -108,11 +117,29 @@ $router->get('/admin/villes/delete/:id', 'AdminController@villesDelete');
 $router->get('/admin/users', 'AdminController@usersIndex');
 
 /**
+ * Affichage du formulaire d'ajout d'un employé par l'admin
+ * Displaying the form to add a new employee by the admin
+ */
+$router->get('/admin/users/add', 'AdminController@usersAdd');
+
+/**
+ * Traitement de l'ajout d'un employé par l'admin
+ * Processing the addition of a new employee by the admin
+ */
+$router->post('/admin/users/create', 'AdminController@usersCreate');
+
+/**
+ * Affichage du formulaire de mise à jour d'un employé par l'admin
+ * Displaying the form to update an employee by the admin
+ */
+$router->get('/admin/users/edit/:id', 'AdminController@usersEdit');
+
+/**
  * Mise à jour du profil d'un employé par l'admin
  * Updating an employee's profile by the admin
  * URL : http://localhost/8000/admin/users/update
  */
-$router->post('/admin/users/update/:id', 'AdminController@usersUpdate');
+$router->post('/admin/users/update', 'AdminController@usersUpdate');
 
 /**
  * Suppression d'un employé par l'admin
@@ -121,9 +148,52 @@ $router->post('/admin/users/update/:id', 'AdminController@usersUpdate');
  */
 $router->get('/admin/users/delete/:id', 'AdminController@usersDelete');
 
+// AUTHENTIFICATION
+/**
+ * Affichage du formulaire de connexion
+ * Displaying the login form
+ */
+$router->get('/login', 'AuthController@showLogin');
+/** 
+ * Traitement de la connexion
+ * Processing the login
+ */
+$router->post('/login', 'AuthController@login');
+/** 
+ * Déconnexion
+ * Logout
+ */
+$router->get('/logout', 'AuthController@logout');
+
+// TRAJETS
+/**
+ * Affichage du formulaire d'ajout d'un trajet
+ * Displaying the form to add a new trip
+ */
+$router->get('/trajets/add', 'TrajetController@add');
+/**
+ * Traitement de l'ajout d'un trajet
+ * Processing the addition of a new trip
+ */
+$router->post('/trajets/create', 'TrajetController@create');
+/**
+ * Modification d'un trajet
+ * Modify trip
+ */
+$router->get('/trajets/edit/:id', 'TrajetController@edit');
+/**
+ * Traitement de la mofification d'un trajet
+ * Retrieving modification of the trip
+ */
+$router->post('/trajets/update/:id', 'TrajetController@update');
+/**
+ * Suppression d'un trajet
+ * Deleting a trip
+ */
+$router->get('/trajets/delete/:id', 'TrajetController@delete');
+
 // BASE DE DONNEES
 // DATABASE
-
 /**
  * Route pour tester la connexion à la base de données
  * Database connection test route
