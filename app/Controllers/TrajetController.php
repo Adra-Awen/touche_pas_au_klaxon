@@ -176,6 +176,30 @@ class TrajetController
 
 }
 
+    /**Affiche les détails d'un trajet
+     * Displays the details of a trip
+     * @param int $id ID du trajet à afficher
+     */
+    public function show($id)
+    {
+        try {
+            $trajet = \Models\Trajet::getById((int)$id);
+
+            if (!$trajet) {
+                echo "<p>Trajet introuvable.</p>";
+                echo "<p><a href='/'>Retour à l'accueil</a></p>";
+                return;
+            }
+
+            require __DIR__ . '/../Views/trajets/show.php';
+
+        } catch (\PDOException $e) {
+            echo "<h1>Erreur lors de la récupération du trajet :</h1>";
+            echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
+            echo "<p><a href='/'>Retour à l'accueil</a></p>";
+        }
+    }
+
     /**Affiche le formulaire de modification d'un trajet
      * Displays the form to edit a trip
      * @param int $id ID du trajet à modifier
@@ -275,9 +299,16 @@ class TrajetController
                 return;
             }
 
-            //Vérifie que la date et l'heure d'arrivée sont supérieures à celles de départ
+            //Vérifie que la date est valide
             $timestamp_depart = strtotime($gdh_depart);
             $timestamp_arrivee = strtotime($gdh_arrivee);
+
+            if ($timestamp_arrivee === false || $timestamp_depart === false) {
+                echo "<p>Erreur : Les dates saisies ne sont pas valides.</p>";
+                echo "<p><a href='/mon-espace'>Retour à votre espace</a></p>";
+                return;
+            }
+            //Vérifie que la date et l'heure d'arrivée sont supérieures à celles de départ            
             if ($timestamp_arrivee <= $timestamp_depart) {
                 echo "<p>Erreur : L'heure et la date d'arrivée doivent être strictement supérieures à celles du départ.</p>";
                 echo "<p><a href='/mon-espace'>Retour à votre espace</a></p>";

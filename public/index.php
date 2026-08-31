@@ -134,6 +134,7 @@ $router->post('/login', 'AuthController@login');
  */
 $router->get('/logout', 'AuthController@logout');
 
+
 // TRAJETS
 /**
  * Affichage du formulaire d'ajout d'un trajet
@@ -160,6 +161,12 @@ $router->post('/trajets/update/:id', 'TrajetController@update');
  * Deleting a trip
  */
 $router->get('/trajets/delete/:id', 'TrajetController@delete');
+/**
+ * Affichage des détails d'un trajet
+ * Displaying the details of a trip
+ */
+$router->get('/trajets/:id', 'TrajetController@show');
+
 
 // BASE DE DONNEES
 // DATABASE
