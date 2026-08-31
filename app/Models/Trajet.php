@@ -107,6 +107,75 @@ class Trajet
     }
 
     /**
+     * Récupère un trajet spécifique par son ID
+     * Retrieves a specific trip by its ID
+     */
+    public static function getById(int $id): ?array
+    {
+        try {
+            $db = Database::getConnection();
+            $queryStr = "SELECT
+                            t.id,
+                            t.id_conducteur,
+                            t.id_agence_depart,
+                            t.id_agence_arrivee,
+                            t.gdh_depart,
+                            t.gdh_arrivee,
+                            t.places_totales,
+                            t.places_disponibles,
+                            a_dep.ville AS agence_depart, 
+                            a_arr.ville AS agence_arrivee
+                        FROM trajets t
+                        INNER JOIN agences a_dep ON t.id_agence_depart = a_dep.id
+                        INNER JOIN agences a_arr ON t.id_agence_arrivee = a_arr.id
+                        WHERE t.id = :id";
+
+            $stmt = $db->prepare($queryStr);
+            $stmt->execute(['id' => $id]);
+            $trajet = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $trajet ?: null;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+
+    /**Modifie un trajet dans la BDD
+     * Updates a trip in the database
+     * @param int $id ID du trajet à modifier
+     */
+    public static function update(
+        int $id, 
+        int $id_agence_depart, 
+        int $id_agence_arrivee, 
+        string $gdh_depart, 
+        string $gdh_arrivee, 
+        int $places_totales
+        ): bool {
+            try {
+                $db = Database::getConnection();
+                $queryStr = "UPDATE trajets
+                            SET id_agence_depart = :id_agence_depart,
+                                id_agence_arrivee = :id_agence_arrivee,
+                                gdh_depart = :gdh_depart,
+                                gdh_arrivee = :gdh_arrivee,
+                                places_totales = :places_totales
+                            WHERE id = :id";
+                $stmt = $db->prepare($queryStr);
+                return $stmt->execute([
+                    'id' => $id,
+                    'id_agence_depart' => $id_agence_depart,
+                    'id_agence_arrivee' => $id_agence_arrivee,
+                    'gdh_depart' => $gdh_depart,
+                    'gdh_arrivee' => $gdh_arrivee,
+                    'places_totales' => $places_totales
+                ]);
+            } catch (PDOException $e) {
+                throw $e;
+            }
+        }
+
+    /**
      * Supprime un trajet dans la BDD
      * Deletes a trip in the database
      */
