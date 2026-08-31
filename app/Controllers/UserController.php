@@ -39,4 +39,26 @@ class UserController
             echo "<p>" . $e->getMessage() . "</p>";
         }
     }
+
+    public function profile()
+    {
+        // Vérifie si l'utilisateur est connecté
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        // Récupère les informations de l'utilisateur connecté
+        try {
+            $mesTrajets = \Models\Trajet::getByConducteur(
+                (int) $_SESSION['user_id']
+            );
+
+            require __DIR__ . '/../Views/users/profile.php';
+
+        } catch (\PDOException $e) {
+            echo "<h1>Erreur lors de la récupération de vos trajets</h1>";
+            echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
+        }
+    }
 }

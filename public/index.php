@@ -60,6 +60,12 @@ $router->get('/trajets', 'TrajetController@index');
  */
 $router->get('/users', 'UserController@index');
 
+/** Espace personnel de l'utilisateur connecté
+ * User's personal space 
+ * URL : http://localhost/8000/mon-espace
+ */
+$router->get('/mon-espace', 'UserController@profile');
+
 
 // ROUTES ADMIN (CRUD)
 // ADMIN ROUTES (CRUD)
@@ -109,44 +115,7 @@ $router->get('/admin/villes/delete/:id', 'AdminController@villesDelete');
 
 
 /** USERS */
-/**
- *  Consultation de tous les employés par l'admin
- * Listing all employees for the admin
- * URL : http://localhost/8000/admin/users
- */
-$router->get('/admin/users', 'AdminController@usersIndex');
 
-/**
- * Affichage du formulaire d'ajout d'un employé par l'admin
- * Displaying the form to add a new employee by the admin
- */
-$router->get('/admin/users/add', 'AdminController@usersAdd');
-
-/**
- * Traitement de l'ajout d'un employé par l'admin
- * Processing the addition of a new employee by the admin
- */
-$router->post('/admin/users/create', 'AdminController@usersCreate');
-
-/**
- * Affichage du formulaire de mise à jour d'un employé par l'admin
- * Displaying the form to update an employee by the admin
- */
-$router->get('/admin/users/edit/:id', 'AdminController@usersEdit');
-
-/**
- * Mise à jour du profil d'un employé par l'admin
- * Updating an employee's profile by the admin
- * URL : http://localhost/8000/admin/users/update
- */
-$router->post('/admin/users/update', 'AdminController@usersUpdate');
-
-/**
- * Suppression d'un employé par l'admin
- * Deleting an employee by the admin
- * URL : http://localhost/8000/admin/users/delete
- */
-$router->get('/admin/users/delete/:id', 'AdminController@usersDelete');
 
 // AUTHENTIFICATION
 /**
