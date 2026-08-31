@@ -28,6 +28,7 @@ class Trajet
             $db = Database::getConnection();
             $queryStr = "SELECT
                         t.id, 
+                        t.id_conducteur,
                         t.gdh_depart,
                         t.gdh_arrivee,
                         t.places_totales,
@@ -35,7 +36,9 @@ class Trajet
                         a_dep.ville AS agence_depart, 
                         a_arr.ville AS agence_arrivee,
                         u.nom AS conducteur_nom, 
-                        u.prenom AS conducteur_prenom
+                        u.prenom AS conducteur_prenom,
+                        u.telephone AS conducteur_telephone ,
+                        u.email AS conducteur_email
                     FROM trajets t
                     INNER JOIN agences a_dep ON t.id_agence_depart= a_dep.id
                     INNER JOIN agences a_arr ON t.id_agence_arrivee = a_arr.id
@@ -124,10 +127,15 @@ class Trajet
                             t.places_totales,
                             t.places_disponibles,
                             a_dep.ville AS agence_depart, 
-                            a_arr.ville AS agence_arrivee
+                            a_arr.ville AS agence_arrivee,
+                            u.nom AS conducteur_nom, 
+                            u.prenom AS conducteur_prenom,
+                            u.telephone AS conducteur_telephone ,
+                            u.email AS conducteur_email
                         FROM trajets t
                         INNER JOIN agences a_dep ON t.id_agence_depart = a_dep.id
                         INNER JOIN agences a_arr ON t.id_agence_arrivee = a_arr.id
+                        INNER JOIN users u ON t.id_conducteur = u.id
                         WHERE t.id = :id";
 
             $stmt = $db->prepare($queryStr);
