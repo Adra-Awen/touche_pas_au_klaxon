@@ -1,3 +1,7 @@
+<?php
+$isConnected = isset($_SESSION['user_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,10 +12,18 @@
 <body>
     <header>
         <nav>
-            <a href="/">Accueil</a>
-            <a href="/Connexion">Connexion</a>
+            <a href="/">Touche pas au klaxon</a>
+            <?php if ($isConnected): ?>
+                <a href="/trajets/add">Proposer un trajet</a>
+            <span>
+                <?= htmlspecialchars($_SESSION['user_prenom']) ?>
+                <?= htmlspecialchars($_SESSION['user_nom']) ?>
+            </span>
+            <a href="/logout">Déconnexion</a>
+        <?php else: ?>
+            <a href="/login">Connexion</a>
+        <?php endif; ?>
         </nav>
     </header>
+
     <main>
-        
-    </main>
