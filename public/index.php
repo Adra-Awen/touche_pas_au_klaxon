@@ -70,14 +70,13 @@ $router->get('/mon-espace', 'UserController@profile');
 // ROUTES ADMIN (CRUD)
 // ADMIN ROUTES (CRUD)
 
-/** VILLES */
-/** 
- * Page principale du panneau d'administration
- * Main page of the admin panel
+/** Tableau de bord de l'administration
+ * Administration dashboard
  * URL : http://localhost/8000/admin
  */
-$router->get('/admin', 'AdminController@index');
+$router->get('/admin', 'AdminController@dashboard');
 
+/** VILLES */
 /**
  * Liste des villes pour l'admin
  * List of cities for the admin
@@ -113,8 +112,17 @@ $router->post('/admin/villes/update/:id', 'AdminController@villesUpdate');
  */
 $router->get('/admin/villes/delete/:id', 'AdminController@villesDelete');
 
+/** TRAJETS
+ * Liste des trajets pour l'admin
+ * List of trips for the admin
+ */
+$router->get('/admin/trajets', 'AdminController@trajetsIndex');
 
-/** USERS */
+/** 
+ * Supprime un trajet depuis l'administration
+ * Deletes a trip from the administration
+ */
+$router->get('/admin/trajets/delete/:id', 'AdminController@trajetsDelete');
 
 
 // AUTHENTIFICATION
@@ -125,9 +133,10 @@ $router->get('/admin/villes/delete/:id', 'AdminController@villesDelete');
 $router->get('/login', 'AuthController@showLogin');
 /** 
  * Traitement de la connexion
- * Processing the login
- */
+ * Processing the login */
 $router->post('/login', 'AuthController@login');
+
+
 /** 
  * Déconnexion
  * Logout
