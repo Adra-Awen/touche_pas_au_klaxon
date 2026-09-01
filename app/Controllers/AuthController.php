@@ -37,7 +37,12 @@ class AuthController
                     $_SESSION['user_prenom'] = $user['prenom'];
                     $_SESSION['user_role'] = $user['role'];
                     
-                    header('Location: /');
+                    if ($user['role'] === 'admin') {
+                        header('Location: /admin');
+                        exit;
+                    }
+
+                    header('Location: /mon-espace');
                     exit;
                 }
             } catch (\PDOException $e) {
